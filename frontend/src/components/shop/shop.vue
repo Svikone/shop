@@ -4,21 +4,40 @@
 
     <md-app md-waterfall md-mode="fixed">
       <md-app-toolbar class="md-primary">
-        <span class="md-title">My Title</span>
+        <span class="md-title">Детали zp.ua</span>
         <div class="container">
           <input type="text" name="" class="serch" placeholder="Поиск запчастей">
           <div class="btnSearch">Найти</div>
-          <div class="trolley">
+          <div class="phone">
+            <img src="../../assets/phone.png">
+            <div class="">(0800) 50-81-99 </div>
+            <div class="direction">&lsaquo;</div>
+
+            <div class="popUp">
+              <div class="schedule">
+                Пн-Пт: 8:30-21:00<br/>
+                Сб-Вс: 8:30-18:00<br/>
+              </div>
+              <div class="phones">
+                (0800) 50-81-99<br/>
+                (098) 580-01-99<br/>
+                (050) 480-01-99<br/>
+                (093) 170-05-93<br/>
+              </div>
+              
+            </div>
+          </div>
+          <router-link  to="/cart" class="trolley">
             <div class="total">1</div>
             Корзина
-          </div>
+          </router-link>
 
         </div>
       </md-app-toolbar>
 
       <md-app-drawer md-permanent="full">
         <md-toolbar class="md-transparent" md-elevation="0">
-          Navigation
+          Навигация
         </md-toolbar>
 
         <md-list>
@@ -43,24 +62,9 @@
           </md-list-item>
         </md-list>
       </md-app-drawer>
-
+  
       <md-app-content>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-        <p>Lo
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
+        <router-view/>
       </md-app-content>
     </md-app>
   </section>
@@ -85,7 +89,8 @@
     },
     computed: {
 
-    }
+    },
+    
 }
 
 
@@ -103,11 +108,56 @@
       justify-content: space-between;
       .container {
         display: flex;
+        .phone {
+          padding: 0px 10px 0px 10px;
+          border-left: 2px solid #4ac144;
+          border-right: 2px solid #4ac144;
+          margin-left: 10px;
+          display: flex;
+          .direction {
+            transform: rotate(-90deg);
+            font-size: 29px;
+            width: 25px;
+            text-align: center;
+            height: 25px;
+          }
+          .popUp {
+            position: absolute;
+            margin-top: 33px;
+            color: black;
+            width: 159px;
+            text-align: center;
+            background: white;
+            word-wrap: break-word;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            display: none;
+            .schedule {
+              border-bottom: 1px solid rgba(0,0,0,0.1);
+              padding-bottom: 15px;
+            }
+            .phones {
+              padding-top: 15px;
+            }
+          }
+          img {
+            height: 31px;
+            margin-right: 5px;
+          }
+          &:hover .popUp {
+            display: block;
+          }
+          &:hover .direction {
+            transform: rotate(90deg);
+          }
+        }
         .trolley {
           padding: 5px;
           border-radius: 5px;
           border: 1px solid #4ac144;
           margin-left: 10px;
+          color: white;
           cursor: pointer;
           &:hover {
             color: black;
@@ -124,7 +174,7 @@
         }
         .serch {
           border: 0 none;
-          background: #c7c7c7;
+          background: white;
           padding: 4px;
           outline: none;
           color:black;
