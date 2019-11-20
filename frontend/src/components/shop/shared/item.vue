@@ -1,7 +1,10 @@
 <template lang="html">
 
-  <section class="model">
-
+  <section class="item">
+    <router-link  to="/model">
+      <div class="logo"><img src="'../../../assets'" + marc.img ></div>
+      <div class="title">{{marc.name}}</div>
+    </router-link>
   </section>
 
 </template>
@@ -9,8 +12,10 @@
 <script lang="js">
 
   export default  {
-    name: 'model',
-    props: [],
+    name: 'item',
+    props: [
+      'marc'
+    ],
     mounted () {
 
     },
@@ -24,15 +29,14 @@
     },
     computed: {
 
-    },
-    
+    }
 }
 
 
 </script>
 
 <style scoped lang="scss">
-  .model {
+  .item {
     width: 148px;
     height: 120px;
     border-radius: 5px;

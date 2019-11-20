@@ -1,14 +1,13 @@
 <template lang="html">
   <section class="marca">
-    <router-link  to="/model">
-      <div class="logo"><img src="../../../assets/phone.png" alt=""></div>
-      <div class="title">Shevrole</div>
-    </router-link>
+    <item v-for="(marc, i) in marcs" v-bind:marc="marc" v-bind:key="i"></item>
+
   </section>
 
 </template>
 
 <script lang="js">
+  import item from '../shared/item.vue'
 
   export default  {
     name: 'marca',
@@ -18,6 +17,23 @@
     },
     data () {
       return {
+        marcs: [{
+          name:'shevrole',
+          img: 'phone.png'
+        },
+        {
+          name:'lada',
+          img: '/phone.png'
+        },
+        {
+          name:'bmw',
+          img: '@/assets/phone.png'
+        },
+        {
+          name:'toyota',
+          img: '../../../assets/phone.png'
+        },
+        ]
 
       }
     },
@@ -26,6 +42,9 @@
     },
     computed: {
 
+    },
+    components: {
+      'item': item
     }
 }
 
@@ -34,28 +53,7 @@
 
 <style scoped lang="scss">
   .marca {
-    width: 148px;
-    height: 120px;
-    border-radius: 5px;
-    margin: 10px;
-    box-shadow: 0 0 9px #fafafa;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    color: #2196F3;
-    &:hover {
-      box-shadow: 0 0 10px rgb(255, 152, 0);
-
-    }
-    .title {
-      font-size: 18px;
-      line-height: 20px;
-      font-weight: bold;
-      text-align: center;
-      vertical-align: middle;
-    }
+   width: 100%;
+   display: flex;
   }                 
 </style>
