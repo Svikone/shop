@@ -1,6 +1,10 @@
 <template lang="html">
   <section class="marca">
-    <item v-for="(marc, i) in marcs" v-bind:marc="marc" v-bind:key="i"></item>
+      <item v-for="(marc, i) in marcs" v-bind:item="marc" v-bind:key="i">
+       
+
+        
+      </item>
 
   </section>
 
@@ -19,19 +23,23 @@
       return {
         marcs: [{
           name:'shevrole',
-          img: 'phone.png'
+          img: 'phone.png',
+          id:'shevrole'
         },
         {
           name:'lada',
-          img: '/phone.png'
+          img: '/phone.png',
+          id:'lada'
         },
         {
           name:'bmw',
-          img: '@/assets/phone.png'
+          img: '@/assets/phone.png',
+          id:'bmw'
         },
         {
           name:'toyota',
-          img: '../../../assets/phone.png'
+          img: '../../../assets/phone.png',
+          id:'toyota'
         },
         ]
 

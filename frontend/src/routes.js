@@ -21,7 +21,7 @@ export default new Router({
                     component: marca,
                 },
                 {
-                    path: '/model',
+                    path: '/model/:id',
                     component: model
                 },
                 {

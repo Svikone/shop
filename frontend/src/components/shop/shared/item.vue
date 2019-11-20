@@ -1,11 +1,10 @@
 <template lang="html">
-
+  <router-link :to="'/model/'+item.id">
   <section class="item">
-    <router-link  to="/model">
-      <div class="logo"><img src="'../../../assets'" + marc.img ></div>
-      <div class="title">{{marc.name}}</div>
-    </router-link>
+      <div class="logo"><img v-bind:src="item.img" /></div>
+      <div class="title">{{item.name}}</div>
   </section>
+  </router-link>
 
 </template>
 
@@ -14,7 +13,7 @@
   export default  {
     name: 'item',
     props: [
-      'marc'
+      'item'
     ],
     mounted () {
 

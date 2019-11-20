@@ -31,7 +31,10 @@
             <div class="total">1</div>
             Корзина
           </router-link>
-
+        </div>
+        <div class="autorization">
+          <div class="login">Вход</div>
+          <div class="register">Регистрация</div>
         </div>
       </md-app-toolbar>
 
@@ -167,7 +170,7 @@
             text-align: center;
             border-radius: 40px;
             position: absolute;
-            right: 48px;
+            // right: 48px;
             top: 0px;
             width: 20px;
           }

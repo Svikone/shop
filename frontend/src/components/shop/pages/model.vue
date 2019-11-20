@@ -1,12 +1,15 @@
 <template lang="html">
 
   <section class="model">
-
+     <item v-for="(model, i) in models" v-bind:item="model" v-bind:key="i"> </item>
+       
   </section>
 
 </template>
 
 <script lang="js">
+  import item from '../shared/item.vue'
+
 
   export default  {
     name: 'model',
@@ -16,7 +19,17 @@
     },
     data () {
       return {
-
+        models: [
+          {
+            name: 'toyota landCruser'
+          },
+          {
+            name: 'toyota supra'
+          },
+          {
+            name: 'toyota corolla'
+          }
+        ]
       }
     },
     methods: {
@@ -25,6 +38,9 @@
     computed: {
 
     },
+    components: {
+      'item': item
+    }
     
 }
 
@@ -33,28 +49,7 @@
 
 <style scoped lang="scss">
   .model {
-    width: 148px;
-    height: 120px;
-    border-radius: 5px;
-    margin: 10px;
-    box-shadow: 0 0 9px #fafafa;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    color: #2196F3;
-    &:hover {
-      box-shadow: 0 0 10px rgb(255, 152, 0);
-
-    }
-    .title {
-      font-size: 18px;
-      line-height: 20px;
-      font-weight: bold;
-      text-align: center;
-      vertical-align: middle;
-    }
+    width: 100%;
+   display: flex;
   }
 </style>
