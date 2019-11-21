@@ -75,19 +75,28 @@
 </template>
 
 <script lang="js">
+  // import axios from 'axios'
 
   export default  {
     name: 'shop',
     props: [],
     mounted () {
-
+      // this.getMarca()
     },
     data () {
       return {
-
+        api_url: 'http://localhost:9000/api',
       }
     },
     methods: {
+      // getMarca() {
+      //   axios.post(this.api_url+'/shop/category/marca',{})
+      //   .then(result => {
+      //     console.log(result.data[0].name)
+      //   }).catch(() => {
+
+      //   })
+      // },
 
     },
     computed: {

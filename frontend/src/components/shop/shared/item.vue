@@ -1,9 +1,9 @@
 <template lang="html">
-  <router-link :to="'/model/'+item.id">
-  <section class="item">
-      <div class="logo"><img v-bind:src="item.img" /></div>
-      <div class="title">{{item.name}}</div>
-  </section>
+  <router-link :to="'/model/'+item.name">
+    <section class="item">
+        <div class="logo"><img v-bind:src="item.img" /></div>
+        <div class="title">{{item.name}}</div>
+    </section>
   </router-link>
 
 </template>
@@ -16,7 +16,7 @@
       'item'
     ],
     mounted () {
-
+      // this.getModel()
     },
     data () {
       return {
@@ -24,7 +24,7 @@
       }
     },
     methods: {
-
+      
     },
     computed: {
 
