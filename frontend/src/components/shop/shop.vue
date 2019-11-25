@@ -111,7 +111,7 @@
 <style scoped lang="scss">
   .shop {
     .md-app {
-      max-height: 400px;
+      // max-height: 400px;
       border: 1px solid rgba(#000, .12);
     }
     .md-primary {

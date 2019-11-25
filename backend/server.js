@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-// const cors = require("cors");
+const cors = require("cors");
 const db = require("./db");
 
-// app.use(cors({origin: "http://localhost:8080"}));
+app.use(cors({origin: "http://localhost:8080"}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use (bodyParser.json ({
 	extended: true,
@@ -12,7 +12,11 @@ app.use (bodyParser.json ({
 }));
 
 const categoryRouter = require("./routes/category");
+const cartRouter = require("./routes/cart");
+
 app.use("/api/shop/category", categoryRouter);
+app.use("/api/shop/cart", cartRouter);
+
 
 
 

@@ -1,10 +1,27 @@
 <template lang="html">
-  <router-link :to="'/model/'+item.name">
+  <router-link v-if="item.selector == 'category'" :to="'/model/'+marc+'/'+model+'/'+item.category">
+    <section class="item">
+        <div class="logo"><img v-bind:src="item.img" /></div>
+        <div class="title">{{item.category_ru}}</div>
+    </section>
+  </router-link>
+
+  <router-link v-else-if="item.selector == 'models'" :to="'/model/'+item.marca+'/'+item.name">
     <section class="item">
         <div class="logo"><img v-bind:src="item.img" /></div>
         <div class="title">{{item.name}}</div>
     </section>
   </router-link>
+
+  <router-link v-else-if="item.selector == 'marcs'" :to="'/model/'+item.name+'/'">
+    <section class="item">
+        <div class="logo"><img v-bind:src="item.img" /></div>
+        <div class="title">{{item.name}}</div>
+    </section>
+  </router-link>
+  
+  
+  
 
 </template>
 
@@ -16,11 +33,12 @@
       'item'
     ],
     mounted () {
-      // this.getModel()
+      console.log(this.item)
     },
     data () {
       return {
-
+        marc: this.$router.currentRoute.params['id'],
+        model: this.$router.currentRoute.params['model'],
       }
     },
     methods: {
