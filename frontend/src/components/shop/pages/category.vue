@@ -28,7 +28,7 @@
     },
     methods: {
       getCategory() {
-        axios.post(this.api_url+'/shop/category/all',{
+        axios.post(this.api_url+'/category/get/all',{
         }).then(result => {
           console.log(result.data)
           this.categorys = result.data

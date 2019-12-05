@@ -29,7 +29,7 @@
     },
     methods: {
       getMarca() {
-        axios.post(this.api_url+'/shop/category/marca',{})
+        axios.post(this.api_url+'/admin/get/marcs',{})
         .then(result => {
           this.marcs = result.data
         }).catch(() => {

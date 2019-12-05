@@ -29,7 +29,7 @@
     },
     methods: {
       getModel() {
-        axios.post(this.api_url+'/shop/category/model',{id: this.id}).then(result => {
+        axios.post(this.api_url+'/model/marc',{id: this.id}).then(result => {
           console.log(result.data)
           this.models = result.data
         }).catch(() => {
