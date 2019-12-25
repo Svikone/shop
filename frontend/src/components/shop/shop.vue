@@ -6,7 +6,7 @@
       <md-app-toolbar class="md-primary">
         <span class="md-title">Детали zp.ua</span>
         <div class="container">
-          <input type="text" name="" class="serch" placeholder="Поиск запчастей">
+          <input type="text" name="" class="serch" placeholder="Поиск запчастей" v-model="str" v-on:input="regExp()">
           <div class="btnSearch">Найти</div>
           <div class="phone">
             <img src="../../assets/phone.png">
@@ -28,7 +28,7 @@
             </div>
           </div>
           <router-link  to="/cart" class="trolley">
-            <div class="total">1</div>
+            <div class="total">{{this.productNumber}}</div>
             Корзина
           </router-link>
         </div>
@@ -76,16 +76,24 @@
 
 <script lang="js">
   // import axios from 'axios'
+  import {eventBus} from '../../main.js'
 
   export default  {
     name: 'shop',
     props: [],
     mounted () {
       // this.getMarca()
+      eventBus.$on('count',() => {
+        console.log('yes')
+        this.productLength()
+      }),
+      this.productLength()
     },
     data () {
       return {
         api_url: 'http://localhost:9000/api',
+        str:'qwe45',
+        productNumber:''
       }
     },
     methods: {
@@ -97,7 +105,18 @@
 
       //   })
       // },
-
+      regExp() {
+        console.log(this.str)
+        this.str = this.str.replace(/[^0-9.]/g,'').replace(/,/,'.').trim();
+        
+      },
+      productLength() {
+        if(localStorage.cart) {
+          this.productNumber = JSON.parse(localStorage.cart).length 
+        }else {
+          this.productNumber = 0
+        }
+      }
     },
     computed: {
 

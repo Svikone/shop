@@ -32,7 +32,7 @@
     },
     methods: {
       getCatalog() {
-        axios.post(this.api_url+'/catalog/get/all',{
+        axios.post(this.api_url+'/catalog/get/all/condition',{
           marc: this.marc,
           model: this.model,
           catalog: this.catalog,
