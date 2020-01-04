@@ -44,25 +44,31 @@
         </md-toolbar>
 
         <md-list>
-          <md-list-item>
-            <md-icon>move_to_inbox</md-icon>
-            <span class="md-list-item-text">Inbox</span>
-          </md-list-item>
+          <div class="md-layout-item">
+            <md-field>
+              <label>Выберите марку</label>
+              <md-select @md-selected="selectCategory(selected)" v-model="selected">
+                <md-option v-for="(marc, i) in this.marcs"  v-bind:value="marc.name" v-bind:key="i">{{marc.name}}</md-option>
+              </md-select>
+            </md-field>
 
-          <md-list-item>
-            <md-icon>send</md-icon>
-            <span class="md-list-item-text">Sent Mail</span>
-          </md-list-item>
+            <md-field>
+              <label>Выберите модель</label>
+              <md-select v-model="selectedModels">
+                <md-option v-for="(model, i) in this.models"  v-bind:value="model.name"  v-bind:key="i">{{model.name}}</md-option>
+              </md-select>
+            </md-field>
 
-          <md-list-item>
-            <md-icon>delete</md-icon>
-            <span class="md-list-item-text">Trash</span>
-          </md-list-item>
+            <md-field>
+              <label>Выберите категорию</label>
+              <md-select v-model="selectedCategorys">
+                <md-option v-for="(category, i) in this.categorys"  v-bind:value="category.category"  v-bind:key="i">{{category.category_ru}}</md-option>
+              </md-select>
+            </md-field>
 
-          <md-list-item>
-            <md-icon>error</md-icon>
-            <span class="md-list-item-text">Spam</span>
-          </md-list-item>
+            <div @click="setCatalog()"> <router-link :to="'/model/'+ this.selected+'/'+this.selectedModels+'/'+this.selectedCategorys" >Перейти</router-link> </div>
+          
+          </div>
         </md-list>
       </md-app-drawer>
   
@@ -75,40 +81,66 @@
 </template>
 
 <script lang="js">
-  // import axios from 'axios'
+  import axios from 'axios'
   import {eventBus} from '../../main.js'
 
   export default  {
     name: 'shop',
     props: [],
     mounted () {
-      // this.getMarca()
+      this.getMarca(),
       eventBus.$on('count',() => {
-        console.log('yes')
         this.productLength()
       }),
-      this.productLength()
+      this.productLength(),
+      this.getCategory()
     },
     data () {
       return {
         api_url: 'http://localhost:9000/api',
         str:'qwe45',
-        productNumber:''
+        productNumber:'',
+        marcs:[],
+        models:[],
+        selected:'',
+        categorys:'',
+        selectedModels:'',
+        selectedCategorys:''
       }
     },
     methods: {
-      // getMarca() {
-      //   axios.post(this.api_url+'/shop/category/marca',{})
-      //   .then(result => {
-      //     console.log(result.data[0].name)
-      //   }).catch(() => {
+      setCatalog() {
+        console.log('qwe')
+        eventBus.$emit('trigerCatalog')
+      },
+      selectCategory(event) {
+        axios.post(this.api_url+'/model/marc',{id: event}).then(result => {
+          this.models = result.data
+          console.log(this.models)
+        }).catch(() => {
 
-      //   })
-      // },
+        })
+      },
+      getMarca() {
+        axios.post(this.api_url+'/admin/get/marcs',{})
+        .then(result => {
+          this.marcs = result.data
+        }).catch(() => {
+
+        })
+      },
       regExp() {
         console.log(this.str)
         this.str = this.str.replace(/[^0-9.]/g,'').replace(/,/,'.').trim();
         
+      },
+      getCategory() {
+        axios.post(this.api_url+'/category/get/all',{}).then(result => {
+          this.categorys = result.data
+          console.log(this.categorys)
+        }).catch(() => {
+
+        })
       },
       productLength() {
         if(localStorage.cart) {

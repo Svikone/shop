@@ -2,14 +2,14 @@
 
   <section class="cart">
     <h1>Корзина товаров</h1>
-    <app-cart v-for="(cart, i) in carts" v-bind:item="cart" v-bind:key="i" v-bind:lsCaunters="lsCart"></app-cart>
+    <app-cart v-for="(cart, i) in carts" v-bind:item="cart" v-bind:key="i" ></app-cart>
     <div class="total">
       <div class="clear" @click="clear()">Очистить корзину</div>
       <div class="priceContainer">Итого:
         <div class="price">{{fullprice}}грн</div>
-        <div class="">фиксануть при нажатии на очистить карзину, и чтоб в корзине товаров в инпут число віводилось</div>
       </div>
     </div>
+    <router-link  to="/checkout">Оформить заказ</router-link>
   </section>
 
 </template>
@@ -25,15 +25,20 @@
     props: [],
     mounted () {
       this.getLocalStorrage(),
-      this.getList()
-
+      this.getList(),
+      eventBus.$on('fullPrice', () => { 
+        this.fullPrice()
+      }),
+      eventBus.$on('removeItem', (data) => { 
+       this.removeItem(data)
+      })
     },
     data () {
       return {
         api_url: 'http://localhost:9000/api',
         carts:[],
         productsId: [],
-        fullprice: 0
+        fullprice: 1
       }
     },
     methods: {
@@ -54,9 +59,11 @@
       },
       fullPrice() {
         const counters = JSON.parse(localStorage.cart)
+        this.fullprice = 0
         for(let price of this.carts) {
           for(let counter of counters) {
             if(price._id == counter.id) {
+              console.log('fulPrice= '+price.price+'*'+counter.number)
               this.fullprice += price.price * counter.number
             }
           }
@@ -67,6 +74,13 @@
         this.carts = []
         eventBus.$emit('count')
 
+      },
+      removeItem(id) {
+        let lsCart = JSON.parse(localStorage.cart);
+        lsCart = lsCart.filter(e => e.id !== id)
+        this.carts = this.carts.filter(e => e._id !== id)
+        localStorage.setItem('cart', JSON.stringify(lsCart));
+        this.fullPrice();
       }
     },
     computed: {

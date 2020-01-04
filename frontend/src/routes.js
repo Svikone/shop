@@ -5,6 +5,8 @@ import model from './components/shop/pages/model.vue'
 import cart from './components/shop/pages/cart/cart.vue'
 import category from './components/shop/pages/category.vue'
 import catalog from './components/shop/pages/catalog/catalog.vue'
+import checkout from './components/shop/pages/checkout/checkout.vue'
+
 
 
 
@@ -40,6 +42,10 @@ export default new Router({
                 {
                     path: '/cart',
                     component: cart
+                },
+                {
+                    path: '/checkout',
+                    component: checkout
                 }
                
             ]

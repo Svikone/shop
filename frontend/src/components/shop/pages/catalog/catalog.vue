@@ -10,6 +10,8 @@
 <script lang="js">
   import axios from 'axios'
   import item from './item/details_item.vue'
+  import {eventBus} from '../../../../main.js'
+
 
   export default  {
     name: 'catalog',
@@ -18,7 +20,12 @@
     // catalog,
     // category,
     mounted () {
-      this.getCatalog()
+      this.getCatalog(),
+      eventBus.$on('trigerCatalog',() => {
+        console.log('qwe')
+         this.getCatalog()
+         
+      })
     },
     data () {
       return {
@@ -26,6 +33,7 @@
         model: this.$router.currentRoute.params['model'],
         catalog: this.$router.currentRoute.params['catalog'],
         api_url: 'http://localhost:9000/api',
+        test:'',
 
         products: []
       }
@@ -39,6 +47,7 @@
         })
         .then(result => {
           this.products = result.data
+
         }).catch(() => {
 
         })
