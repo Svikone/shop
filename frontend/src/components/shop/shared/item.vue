@@ -1,21 +1,21 @@
 <template lang="html">
   <router-link v-if="item.selector == 'category'" :to="'/model/'+marc+'/'+model+'/'+item.category">
     <section class="item">
-        <div class="logo"><img v-bind:src="item.img" /></div>
+        <div class="logo"><img v-bind:src="'http://localhost:9000/file/uploads/'+item.url_img" /></div>
         <div class="title">{{item.category_ru}}</div>
     </section>
   </router-link>
 
   <router-link v-else-if="item.selector == 'models'" :to="'/model/'+item.marca+'/'+item.name">
     <section class="item">
-        <div class="logo"><img v-bind:src="item.img" /></div>
+        <div class="logo"><img v-bind:src="'http://localhost:9000/file/uploads/'+item.url_img" /></div>
         <div class="title">{{item.name}}</div>
     </section>
   </router-link>
 
   <router-link v-else-if="item.selector == 'marcs'" :to="'/model/'+item.name+'/'">
     <section class="item">
-        <div class="logo"><img v-bind:src="item.img" /></div>
+        <div class="logo"><img v-bind:src="'http://localhost:9000/file/uploads/'+item.url_img" /></div>
         <div class="title">{{item.name}}</div>
     </section>
   </router-link>
@@ -69,6 +69,12 @@
     &:hover {
       box-shadow: 0 0 10px rgb(255, 152, 0);
 
+    }
+    .logo {
+      text-align: center;
+      img {
+        width: 87px;
+      }
     }
     .title {
       font-size: 18px;

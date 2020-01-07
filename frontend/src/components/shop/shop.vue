@@ -54,19 +54,23 @@
 
             <md-field>
               <label>Выберите модель</label>
-              <md-select v-model="selectedModels">
+              <md-select @md-selected="selectModels(selectedModels)" v-model="selectedModels" v-bind:disabled="modelsDisable">
                 <md-option v-for="(model, i) in this.models"  v-bind:value="model.name"  v-bind:key="i">{{model.name}}</md-option>
               </md-select>
             </md-field>
 
             <md-field>
               <label>Выберите категорию</label>
-              <md-select v-model="selectedCategorys">
+              <md-select v-model="selectedCategorys"  v-bind:disabled="categoryDisable">
                 <md-option v-for="(category, i) in this.categorys"  v-bind:value="category.category"  v-bind:key="i">{{category.category_ru}}</md-option>
               </md-select>
             </md-field>
 
-            <div @click="setCatalog()"> <router-link :to="'/model/'+ this.selected+'/'+this.selectedModels+'/'+this.selectedCategorys" >Перейти</router-link> </div>
+            <div @click="setCatalog()"> 
+              <div v-if="this.selectedModels==null && this.selectedCategorys==null &&  this.selected!=null"><router-link  :to="'/model/'+ this.selected" >Перейти</router-link> </div>
+              <div v-else-if="this.selectedCategorys==null" ><router-link :to="'/model/'+ this.selected+'/'+this.selectedModels" >Перейти</router-link> </div>
+              <div v-else><router-link  :to="'/model/'+ this.selected+'/'+this.selectedModels+'/'+this.selectedCategorys" >Перейти</router-link> </div>
+            </div>
           
           </div>
         </md-list>
@@ -92,8 +96,8 @@
       eventBus.$on('count',() => {
         this.productLength()
       }),
-      this.productLength(),
-      this.getCategory()
+      this.productLength()
+      // this.getCategory()
     },
     data () {
       return {
@@ -102,24 +106,46 @@
         productNumber:'',
         marcs:[],
         models:[],
-        selected:'',
+        selected:null,
         categorys:'',
-        selectedModels:'',
-        selectedCategorys:''
+        selectedModels:null,
+        selectedCategorys:null,
+        modelsDisable: true,
+        categoryDisable: true
+
       }
     },
     methods: {
       setCatalog() {
-        console.log('qwe')
         eventBus.$emit('trigerCatalog')
+        console.log(
+        this.selected,
+        
+        this.selectedModels,
+        this.selectedCategorys
+        )
+        this.selected = null;
+        this.selectedModels = null;
+        this.selectedCategorys = null;
+        this.modelsDisable = true;
+        this.categoryDisable = true
       },
       selectCategory(event) {
+        
         axios.post(this.api_url+'/model/marc',{id: event}).then(result => {
           this.models = result.data
-          console.log(this.models)
+          if(this.models.length>0){
+            this.modelsDisable = false
+          }
         }).catch(() => {
 
         })
+      },
+      selectModels(event) {
+        if(event){
+          this.categoryDisable = false
+        }
+        this.getCategory()
       },
       getMarca() {
         axios.post(this.api_url+'/admin/get/marcs',{})
@@ -130,14 +156,12 @@
         })
       },
       regExp() {
-        console.log(this.str)
         this.str = this.str.replace(/[^0-9.]/g,'').replace(/,/,'.').trim();
         
       },
       getCategory() {
         axios.post(this.api_url+'/category/get/all',{}).then(result => {
           this.categorys = result.data
-          console.log(this.categorys)
         }).catch(() => {
 
         })
