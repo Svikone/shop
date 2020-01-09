@@ -24,8 +24,8 @@
     methods: {
       getOrder() {
         let key = JSON.parse(localStorage.cart)
-        axios.post(this.api_url+'/order/add',{phone: this.item.phone,user_name: this.item.user_name, catalogs: key}).then(() => {
-            // console.log(result.data)
+        axios.post(this.api_url+'/order/add',{phone: this.item.phone,user_name: this.item.user_name, catalogs: key}).then(result => {
+            console.log(result.data)
           
           }).catch(() => {
 
