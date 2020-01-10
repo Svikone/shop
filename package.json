@@ -1,22 +1,10 @@
 {
   "name": "shop-build2",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Heroku App",
+  "author": "gearmobile",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Svikone/shop.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Svikone/shop/issues"
-  },
-  "homepage": "https://github.com/Svikone/shop#readme",
-  "dependencies": {
-    "express": "^4.17.1"
+    "postinstall": "npm install express"
   }
 }
