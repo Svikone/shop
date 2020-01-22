@@ -1,16 +1,30 @@
 <template lang="html">
-
   <section class="catalog">
     <!-- <h1 v-for="(product, i) in products" v-bind:key="i" >{{product.name}}</h1> -->
-    <app-item v-for="(product, i) in products" v-bind:item="product" v-bind:key="i">{{product.name}}</app-item>
-  </section>
+    <div v-if="this.search == ''">
+      Запрос не должен быть пустой
+    </div>
+    <!-- <div v-else-if="productsSearch.length == 0">
+      Результат не найден
+    </div> -->
+    <div v-else-if="this.state == 'search'">
+      <app-item v-for="(product, i) in productsSearch" v-bind:item="product" v-bind:key="i">{{product.name}}</app-item>
+    </div>
+    <div v-else> 
+      <app-item v-for="(product, i) in products" v-bind:item="product" v-bind:key="i">{{product.name}}</app-item>
+    </div>
 
+    
+  </section>
 </template>
 
 <script lang="js">
   import axios from 'axios'
   import item from './item/details_item.vue'
   import {eventBus} from '../../../../main.js'
+  import api from '../../../../app.config.js'
+
+
 
 
   export default  {
@@ -22,9 +36,16 @@
     mounted () {
       this.getCatalog(),
       eventBus.$on('trigerCatalog',() => {
-        console.log('qwe')
          this.getCatalog()
-         
+      }),
+      eventBus.$on('search', data => {
+        this.search = data.qwe,
+        this.state = data.state
+        console.log(this.search)
+        // this.state = data.state;
+        this.searchGetCatalog()
+        // this.state="search"
+
       })
     },
     data () {
@@ -32,15 +53,17 @@
         marc: this.$router.currentRoute.params['id'],
         model: this.$router.currentRoute.params['model'],
         catalog: this.$router.currentRoute.params['catalog'],
-        api_url: 'http://localhost:9000/api',
-        test:'',
+        api_url: api.config,
 
-        products: []
+        products: [],
+        search: '1',
+        productsSearch: [],
+        state: ''
       }
     },
     methods: {
       getCatalog() {
-        axios.post(this.api_url+'/catalog/get/all/condition',{
+        axios.post(this.api_url.url+this.api_url.api+'/catalog/get/all/condition',{
           marc: this.marc,
           model: this.model,
           catalog: this.catalog,
@@ -52,6 +75,19 @@
 
         })
       },
+      searchGetCatalog() {
+        console.log( this.search,this.state)
+        axios.post(this.api_url.url+this.api_url.api+'/catalog/search',{
+          searchText: this.search
+        })
+        .then(result => {
+          this.productsSearch = result.data
+          console.log(this.productsSearch)
+
+        }).catch(() => {
+
+        })
+      }
     },
     computed: {
 

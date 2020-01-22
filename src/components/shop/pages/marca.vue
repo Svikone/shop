@@ -12,6 +12,7 @@
 
 <script lang="js">
   import axios from 'axios'
+  import api from '../../../app.config.js'
 
   import item from '../shared/item.vue'
 
@@ -23,13 +24,13 @@
     },
     data () {
       return {
-        api_url: 'http://localhost:9000/api',
+        api_url: api.config,
         marcs:[]
       }
     },
     methods: {
       getMarca() {
-        axios.post(this.api_url+'/admin/get/marcs',{})
+        axios.post(this.api_url.url+this.api_url.api+'/admin/get/marcs',{})
         .then(result => {
           this.marcs = result.data
         }).catch(() => {
@@ -50,7 +51,8 @@
 
 <style scoped lang="scss">
   .marca {
-   width: 100%;
-   display: flex;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
   }                 
 </style>

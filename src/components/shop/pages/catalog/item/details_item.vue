@@ -4,7 +4,7 @@
     <md-card md-with-hover>
       <md-ripple>
        
-          <img v-bind:src="'http://localhost:9000/file/uploads/'+item.url_img" />
+          <img v-bind:src="api_url.url+'/file/uploads/'+item.url_img" />
           <div class="listContent">
             <div class="info">
               <div class="headline">{{item.name}}</div>
@@ -29,6 +29,8 @@
 
 <script lang="js">
   import {eventBus} from '../../../../../main.js'
+  import api from '../../../../../app.config.js'
+
 
 
   export default  {
@@ -38,7 +40,8 @@
     },
     data () {
       return {
-        number:1
+        number:1,
+        api_url: api.config
       }
     },
     methods: {
@@ -90,7 +93,7 @@
           height: auto;
           border-radius: 10px;
           border: 1px solid black;
-          width: 142px;
+          padding: 10px;
           height: 95px;
         }
         .listContent {

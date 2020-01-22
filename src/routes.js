@@ -46,6 +46,10 @@ export default new Router({
                 {
                     path: '/checkout',
                     component: checkout
+                },
+                {
+                    path: '/catalog/search',
+                    component: catalog
                 }
                
             ]

@@ -4,7 +4,7 @@
     <md-steppers>
       <md-step id="first" md-label="Контакты"> 
         <div class="container">
-          Телефон: <input type="tel" name="" class='tel' v-model="phone">
+          Телефон: <input type="tel"  name="" class='tel' v-model="phone">
           ФИО: <input type="text" name="" v-model="name">
         </div>
         <app-btn v-bind:item="{phone: this.phone,user_name: this.name}"></app-btn>
@@ -55,6 +55,7 @@
       height: 100%;
       .container {
         display: flex;
+        flex-direction: column;
       }
     }
   }

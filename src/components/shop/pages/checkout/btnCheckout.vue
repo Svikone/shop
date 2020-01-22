@@ -8,6 +8,8 @@
 
 <script lang="js">
   import axios from 'axios'
+  import api from '../../../../app.config.js'
+
 
   export default  {
     name: 'btn-checkout',
@@ -17,14 +19,13 @@
     },
     data () {
       return {
-        api_url: 'http://localhost:9000/api',
-
+        api_url: api.config,
       }
     },
     methods: {
       getOrder() {
         let key = JSON.parse(localStorage.cart)
-        axios.post(this.api_url+'/order/add',{phone: this.item.phone,user_name: this.item.user_name, catalogs: key}).then(result => {
+        axios.post(this.api_url.url+this.api_url.api+'/order/add',{phone: this.item.phone,user_name: this.item.user_name, catalogs: key}).then(result => {
             console.log(result.data)
           
           }).catch(() => {

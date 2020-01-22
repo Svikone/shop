@@ -2,14 +2,18 @@
 
   <section class="cart">
     <h1>Корзина товаров</h1>
-    <app-cart v-for="(cart, i) in carts" v-bind:item="cart" v-bind:key="i" ></app-cart>
-    <div class="total">
-      <div class="clear" @click="clear()">Очистить корзину</div>
-      <div class="priceContainer">Итого:
-        <div class="price">{{fullprice}}грн</div>
+    <div v-if="this.productsId.length > 0">
+      <app-cart v-for="(cart, i) in carts" v-bind:item="cart" v-bind:key="i" ></app-cart>
+      <div class="total">
+        <div class="clear" @click="clear()">Очистить корзину</div>
+        <div class="priceContainer">Итого:
+          <div class="price">{{fullprice}}грн</div>
+        </div>
       </div>
+      <router-link  to="/checkout">Оформить заказ</router-link>
     </div>
-    <router-link  to="/checkout">Оформить заказ</router-link>
+    <div v-else>Корзина пуста</div>
+
   </section>
 
 </template>
@@ -18,6 +22,7 @@
   import cart from './listCart/listCart.vue'
   import axios from 'axios'
   import {eventBus} from '../../../../main.js'
+  import api from '../../../../app.config.js'
 
  
   export default  {
@@ -35,15 +40,15 @@
     },
     data () {
       return {
-        api_url: 'http://localhost:9000/api',
+        api_url: api.config,
         carts:[],
         productsId: [],
-        fullprice: 1
+        fullprice: 0
       }
     },
     methods: {
       getList() {
-        axios.post(this.api_url+'/catalog/cart/added/products',{productsId: this.productsId}).then(result => {
+        axios.post(this.api_url.url+this.api_url.api+'/catalog/cart/added/products',{productsId: this.productsId}).then(result => {
           // console.log(result.data)
           this.carts = result.data
           this.fullPrice()
@@ -59,6 +64,7 @@
       },
       fullPrice() {
         const counters = JSON.parse(localStorage.cart)
+        console.log(counters)
         this.fullprice = 0
         for(let price of this.carts) {
           for(let counter of counters) {
@@ -72,7 +78,9 @@
       clear() {
         localStorage.removeItem("cart");
         this.carts = []
+        this.fullprice = 0
         eventBus.$emit('count')
+        this.productsId = 0;
 
       },
       removeItem(id) {
@@ -81,6 +89,8 @@
         this.carts = this.carts.filter(e => e._id !== id)
         localStorage.setItem('cart', JSON.stringify(lsCart));
         this.fullPrice();
+        eventBus.$emit('count')
+
       }
     },
     computed: {

@@ -11,6 +11,8 @@
 <script lang="js">
   import axios from 'axios'
   import item from '../shared/item.vue'
+  import api from '../../../app.config.js'
+
 
 
 
@@ -23,12 +25,12 @@
     data () {
       return {
         categorys: [],
-        api_url: 'http://localhost:9000/api',
+        api_url: api.config
       }
     },
     methods: {
       getCategory() {
-        axios.post(this.api_url+'/category/get/all',{
+        axios.post(this.api_url.url+this.api_url.api+'/category/get/all',{
         }).then(result => {
           console.log(result.data)
           this.categorys = result.data

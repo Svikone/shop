@@ -8,7 +8,7 @@
 
 <script lang="js">
   import axios from 'axios'
-
+  import api from '../../../app.config.js'
   import item from '../shared/item.vue'
 
 
@@ -21,15 +21,13 @@
     data () {
       return {
         id: this.$router.currentRoute.params['id'],
-        api_url: 'http://localhost:9000/api',
-
-
+        api_url: api.config,
         models: []
       }
     },
     methods: {
       getModel() {
-        axios.post(this.api_url+'/model/marc',{id: this.id}).then(result => {
+        axios.post(this.api_url.url+this.api_url.api+'/model/marc',{id: this.id}).then(result => {
           console.log(result.data)
           this.models = result.data
         }).catch(() => {
