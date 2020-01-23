@@ -21,6 +21,7 @@
     props: [],
     mounted () {
       this.getMarca()
+      
     },
     data () {
       return {

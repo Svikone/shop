@@ -30,23 +30,21 @@
   export default  {
     name: 'catalog',
     props: [],
-    // marc,
-    // catalog,
-    // category,
+    
     mounted () {
       this.getCatalog(),
-      eventBus.$on('trigerCatalog',() => {
-         this.getCatalog()
-      }),
       eventBus.$on('search', data => {
         this.search = data.qwe,
         this.state = data.state
         console.log(this.search)
-        // this.state = data.state;
         this.searchGetCatalog()
-        // this.state="search"
 
+      }),
+      eventBus.$on('reRender',() => {
+        this.getParams()
+        this.getCatalog()
       })
+      
     },
     data () {
       return {
@@ -62,6 +60,11 @@
       }
     },
     methods: {
+      getParams() {
+        this.marc = this.$router.currentRoute.params['id'];
+        this.model = this.$router.currentRoute.params['model'];
+        this.catalog = this.$router.currentRoute.params['catalog'];
+      },
       getCatalog() {
         axios.post(this.api_url.url+this.api_url.api+'/catalog/get/all/condition',{
           marc: this.marc,

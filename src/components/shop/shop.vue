@@ -55,15 +55,15 @@
             </router-link>
           </div>
         </div>
-        <!-- <div class="autorization">
-          <div class="login">Вход</div>
-          <div class="register">Регистрация</div>
-        </div> -->
+       
       </md-app-toolbar>
 
       <md-app-drawer md-permanent="full"  :md-active.sync="menuVisible">
-        <md-toolbar class="md-transparent" md-elevation="0">
+        <md-toolbar class="md-transparent" md-elevation="0" >
           Навигация
+          <div class="menuClose" @click="menuVisible = !menuVisible">
+            <img  src="../../assets/menu-black.png">
+          </div>
         </md-toolbar>
 
         <md-list>
@@ -89,11 +89,8 @@
               </md-select>
             </md-field>
 
-            <!-- <div @click="setCatalog()" class="btnNavigation">  -->
-            <div @click="setCatalog()"> 
-              <router-link v-if="this.selectedModels==null && this.selectedCategorys==null &&  this.selected!=null"  :to="'/model/'+ this.selected" ><div  class="btnNavigation">Перейти</div></router-link> 
-              <router-link v-else-if="this.selectedCategorys==null" :to="'/model/'+ this.selected+'/'+this.selectedModels"  ><div  class="btnNavigation">Перейти</div></router-link> 
-              <router-link v-else :to="'/model/'+ this.selected+'/'+this.selectedModels+'/'+this.selectedCategorys"><div  class="btnNavigation">Перейти</div></router-link> 
+            <div class="btnNavigation" @click="setCatalog()"> 
+              Перейти
             </div>
           </div>
         </md-list>
@@ -102,6 +99,8 @@
       <md-app-content>
         <router-view/>
       </md-app-content>
+        <app-footer></app-footer>
+
     </md-app>
   </section>
 
@@ -111,6 +110,7 @@
   import axios from 'axios'
   import {eventBus} from '../../main.js'
   import api from '../../app.config.js'
+  import footer from '../../core/ui-ux/footer.vue'
 
   export default  {
     name: 'shop',
@@ -142,7 +142,17 @@
     },
     methods: {
       setCatalog() {
-        eventBus.$emit('trigerCatalog')
+        if(this.selectedModels==null && this.selectedCategorys==null &&  this.selected!=null){
+          this.$router.push('/model/'+ this.selected)
+        }
+        else if(this.selectedCategorys==null) {
+          this.$router.push('/model/'+ this.selected+'/'+this.selectedModels)
+        }
+        else {
+          this.$router.push('/model/'+ this.selected+'/'+this.selectedModels+'/'+this.selectedCategorys)
+        }
+        eventBus.$emit('reRender')
+
         this.selected = null;
         this.selectedModels = null;
         this.selectedCategorys = null;
@@ -175,10 +185,7 @@
 
         })
       },
-      // regExp() {
-      //   this.str = this.str.replace(/[^0-9.]/g,'').replace(/,/,'.').trim();
-        
-      // },
+      
       getCategory() {
         axios.post(this.api_url.url+this.api_url.api+'/category/get/all',{}).then(result => {
           this.categorys = result.data
@@ -204,6 +211,9 @@
     },
     computed: {
     },
+    components: {
+      'app-footer': footer
+    }
 }
 
 
@@ -213,8 +223,35 @@
   .shop {
     height: 100%;
     .md-app {
-      // max-height: 400px;
+      height: 100%;
       border: 1px solid rgba(#000, .12);
+      // height: 74.9vw;
+      .md-drawer {
+        width: 230px;
+        max-width: calc(100vw - 125px);
+        height: 100%;
+        .btnNavigation {
+          background: #4ac144;
+          padding: 5px;
+          border-radius: 7px;
+          text-align: center;
+          color:white;
+          cursor: pointer;
+          a{
+            color:black;
+          }
+        }
+        .md-toolbar {
+          font-family: sans-serif;
+          display: flex;
+          font-weight: bold;
+          justify-content: space-between;
+          .menuClose {
+            display: none ;
+            width: 29px;
+          }
+        }
+      }
     }
     .md-primary {
       border-bottom: 1px solid #9e9e9e80;
@@ -250,7 +287,7 @@
                 border-radius: 5px 0px 0px 5px;
               }
               .btnSearch {
-                padding: 7px 20px;
+                padding: 7px 26px;
                 background: #4ac144;
                 font-family: sans-serif;
                 border-radius: 0px 5px 5px 0px;
@@ -338,28 +375,14 @@
         
       }
     }
-    .md-app {
-      height: 100%;
-      .md-drawer {
-        width: 230px;
-        max-width: calc(100vw - 125px);
-        height: 100%;
-        .btnNavigation {
-          background: #4ac144;
-          padding: 5px;
-          border-radius: 7px;
-          text-align: center;
-          color:white;
-          cursor: pointer;
-          a{
-            color:black;
-          }
-        }
+    
+    .md-app-scroller {
+        background: red;
+        overflow: unset;
+        // .md-content {
+        //   background: #e0e0e0;
+        // }
       }
-      .md-content {
-        background: #9e9e9e52;
-      }
-    }
     
     @media (max-width:  930px) { 
       .none {
@@ -414,28 +437,14 @@
               padding: 5px 0px 0px 0px;
               input {
                 border: 1.2px solid #4ac144 !important;
-                width: 126px;
+                width: 139px;
               }
             }
-            // .searchContainer {
-            //   display: flex;
-            //   margin-top: 3px;
-            //   z-index: auto;
-            // }
-            
-            // .btnSearch {
-            //   display: block;
-
-            // }
-
           }
           .phone {
             .popUp {
               margin-left: -11px;
             }
-            // .number {
-            //   display: none;
-            // }
           }
           .trolley {
             .total {
@@ -443,14 +452,22 @@
             }
 
           }
-          // .serch {
-          //   display: none;
-          // }
 
         }
 
       }
     
+    }
+    @media (max-width:  600px) { 
+      .md-toolbar {
+          .menuClose {
+            display: block !important;
+            cursor: pointer;
+            img {
+              width: 29px;
+            }
+          }
+        }
     }
   }
 </style>

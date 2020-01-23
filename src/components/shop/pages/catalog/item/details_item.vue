@@ -133,9 +133,8 @@
             padding: 5px 15px 5px 15px;
             box-shadow: 2px 2px 4px 0 rgba(163,184,165,0.7);
             border-radius: 5px;
-            background-color: #ff9800;
+            background-color: #4ac144;
             &:hover {
-              background-color: #4ac144;
               color: white;
               transition:  0.5s ease;
               cursor: pointer;

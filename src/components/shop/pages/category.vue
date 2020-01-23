@@ -12,15 +12,16 @@
   import axios from 'axios'
   import item from '../shared/item.vue'
   import api from '../../../app.config.js'
-
-
-
+  import {eventBus} from '../../../main.js'
 
   export default  {
     name: 'category',
     props: [],
     mounted () {
-      this.getCategory()
+      this.getCategory(),
+      eventBus.$on('reRender',() => {
+        this.getCategory()
+      })
     },
     data () {
       return {

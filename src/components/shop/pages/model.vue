@@ -10,14 +10,20 @@
   import axios from 'axios'
   import api from '../../../app.config.js'
   import item from '../shared/item.vue'
-
+  import {eventBus} from '../../../main.js'
 
   export default  {
     name: 'model',
     props: [],
     mounted () {
       this.getModel()
+      eventBus.$on('reRender',() => {
+        console.log('renderModel')
+        this.id = this.$router.currentRoute.params['id'],
+        this.getModel()
+      })
     },
+    
     data () {
       return {
         id: this.$router.currentRoute.params['id'],
