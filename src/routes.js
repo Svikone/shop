@@ -6,14 +6,8 @@ import cart from './components/shop/pages/cart/cart.vue'
 import category from './components/shop/pages/category.vue'
 import catalog from './components/shop/pages/catalog/catalog.vue'
 import checkout from './components/shop/pages/checkout/checkout.vue'
-
-
-
-
-
-
-
 import shop from '@/components/shop/shop'
+
 Vue.use(Router) 
 
 export default new Router({

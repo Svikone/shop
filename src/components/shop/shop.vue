@@ -11,13 +11,14 @@
               <img  src="../../../src/assets/menu.png">
             </div>
             <div class="wrapper">
-              <div class="searchMobil">
+              <div class="searchMobil" @click="showSearch = !showSearch">
                 <img  src="../../../src/assets/search.png">
               </div>
-              <div class="searchContainer none">
+              <div class="searchContainer" v-show="showSearch">
                 <div class="conteinerContent">
                   <input type="text" name="" class="serch  " placeholder="Поиск запчастей" v-model="str" >
-                  <div class="btnSearch "  @click="search()">
+                  <div class="btnSearch "  @click="search(),handleResize()
+">
                     <router-link to="/catalog/search">
                       Найти
                     </router-link>
@@ -28,12 +29,12 @@
               </div>
 
             </div>
-            <div class="phone">
+            <div class="phone" >
               <img src="../../assets/phone.png">
-              <div class="number none">(0800) 50-81-99 </div>
+              <div class="number ">(0800) 50-81-99 </div>
               <div class="direction">&lsaquo;</div>
 
-              <div class="popUp">
+              <div class="popUp" >
                 <div class="schedule">
                   Пн-Пт: 8:30-21:00<br/>
                   Сб-Вс: 8:30-18:00<br/>
@@ -88,18 +89,21 @@
                 <md-option v-for="(category, i) in this.categorys"  v-bind:value="category.category"  v-bind:key="i">{{category.category_ru}}</md-option>
               </md-select>
             </md-field>
-
-            <div class="btnNavigation" @click="setCatalog()"> 
+            <div class="btnNavigation" @click="setCatalog()" > 
               Перейти
             </div>
+            <div class="showEror" v-show="showEror">Выберите марку автомобиля</div>
           </div>
         </md-list>
       </md-app-drawer>
   
       <md-app-content>
-        <router-view/>
-      </md-app-content>
+        <div class="wrapperContent">
+          <router-view/>
+        </div>
+        
         <app-footer></app-footer>
+      </md-app-content>
 
     </md-app>
   </section>
@@ -120,8 +124,8 @@
       eventBus.$on('count',() => {
         this.productLength()
       }),
-      this.productLength()
-     
+      this.productLength(),
+      this.handleResize()
     },
     data () {
       return {
@@ -130,19 +134,37 @@
         productNumber:'',
         marcs:[],
         models:[],
-        selected:null,
+        selected: null,
         categorys:'',
         selectedModels:null,
         selectedCategorys:null,
         modelsDisable: true,
         categoryDisable: true,
-        menuVisible: false
-
+        menuVisible: false,
+        showEror: false,
+        showSearch: true,
+        searchText: ''
       }
     },
+    created() {
+      window.addEventListener('resize', this.handleResize)
+    },
     methods: {
+      handleResize() {
+        if(window.innerWidth < 930) {
+          this.showSearch = false
+        }
+        else if(window.innerWidth > 930) {
+          this.showSearch = true
+        }
+      },
+     
       setCatalog() {
-        if(this.selectedModels==null && this.selectedCategorys==null &&  this.selected!=null){
+        if(this.selected == null) {
+          this.showEror = !this.showEror
+          setTimeout(() => this.showEror = false, 2000);
+        }
+        else if(this.selectedModels==null && this.selectedCategorys==null &&  this.selected!=null){
           this.$router.push('/model/'+ this.selected)
         }
         else if(this.selectedCategorys==null) {
@@ -201,9 +223,8 @@
         }
       },
       search() {
-        console.log(this.str)
         eventBus.$emit('search', {
-          qwe: this.str,
+          searchText: this.str,
           state: 'search'
           
         },this.str='')
@@ -215,7 +236,6 @@
       'app-footer': footer
     }
 }
-
 
 </script>
 
@@ -240,6 +260,11 @@
           a{
             color:black;
           }
+        }
+        .showEror {
+          padding: 5px;
+          color: #FF5722;
+          text-align: center;
         }
         .md-toolbar {
           font-family: sans-serif;
@@ -277,6 +302,9 @@
           .wrapper {
             .searchMobil {
               display: none;
+            }
+            .searchContainer  {
+              // display: block !important;
             }
             .conteinerContent {
               display: flex;
@@ -372,17 +400,22 @@
             width: 20px;
           }
         }
-        
       }
     }
     
     .md-app-scroller {
-        background: red;
-        overflow: unset;
-        // .md-content {
-        //   background: #e0e0e0;
-        // }
+    color:red;
+      .md-content {
+        padding: 0px;
+        background: rgba(192, 191, 191, 0.4);
+        overflow: overlay;
+        .wrapperContent {
+          min-height: 100%;
+          padding: 15px;
+          padding-bottom: 215px;
+        }
       }
+    }
     
     @media (max-width:  930px) { 
       .none {
@@ -403,21 +436,12 @@
           display: flex;
           justify-content: center;
           .menu {
-            background: #4ac144;
-            display: block !important;
-            width: 34px;
-            border: 1px solid #4ac144;
-            border-radius: 5px;
-            padding: 6px;
-            margin-right: 10px;
-            cursor: pointer;
             img {
               width: 21px;
               position: fixed;
             }
           }
           .wrapper {
-
             .searchMobil {
               background-color: #4ac144;
               padding: 4px;
@@ -425,11 +449,8 @@
               border: 1px solid #4ac144;
               cursor: pointer;
               display: block !important;
-              
             }
-            &:hover .searchContainer{
-              display: block !important;
-              
+            .searchContainer{
             }
             .conteinerContent {
               display: flex;
@@ -450,24 +471,35 @@
             .total {
               top: 18px;
             }
-
           }
-
         }
-
       }
-    
     }
     @media (max-width:  600px) { 
       .md-toolbar {
-          .menuClose {
+        .menu {
+          background: #4ac144;
             display: block !important;
+            width: 34px;
+            border: 1px solid #4ac144;
+            border-radius: 5px;
+            padding: 6px;
+            margin-right: 10px;
             cursor: pointer;
-            img {
-              width: 29px;
-            }
+        }
+        .phone {
+          .number {
+            display: none;
           }
         }
+        .menuClose {
+          display: block !important;
+          cursor: pointer;
+          img {
+            width: 29px;
+          }
+        }
+      }
     }
   }
 </style>

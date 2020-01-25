@@ -34,7 +34,7 @@
     mounted () {
       this.getCatalog(),
       eventBus.$on('search', data => {
-        this.search = data.qwe,
+        this.search = data.searchText,
         this.state = data.state
         console.log(this.search)
         this.searchGetCatalog()

@@ -93,7 +93,6 @@
           height: auto;
           border-radius: 10px;
           border: 1px solid black;
-          padding: 10px;
           height: 95px;
         }
         .listContent {
@@ -144,6 +143,15 @@
             }
           }
         }
+      }
+    }
+    @media (max-width:  930px) { 
+      .md-ripple {
+        img {
+          max-width: 113px; 
+
+        }
+        
       }
     }
   }
