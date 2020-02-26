@@ -17,8 +17,7 @@
               <div class="searchContainer" v-show="showSearch">
                 <div class="conteinerContent">
                   <input type="text" name="" class="serch  " placeholder="Поиск запчастей" v-model="str" >
-                  <div class="btnSearch "  @click="search(),handleResize()
-">
+                  <div class="btnSearch "  @click="search(),handleResize()" >
                     <router-link to="/catalog/search">
                       Найти
                     </router-link>
@@ -182,6 +181,7 @@
         this.categoryDisable = true;
         this.menuVisible = false
       },
+
       selectMarc(event) {
         
         axios.post(this.api_url.url+this.api_url.api+'/model/marc',{id: event}).then(result => {
@@ -193,12 +193,14 @@
 
         })
       },
+
       selectModels(event) {
         if(event){
           this.categoryDisable = false
         }
         this.getCategory()
       },
+
       getMarca() {
         axios.post(this.api_url.url+this.api_url.api+'/admin/get/marcs',{})
         .then(result => {
@@ -215,6 +217,7 @@
 
         })
       },
+
       productLength() {
         if(localStorage.cart) {
           this.productNumber = JSON.parse(localStorage.cart).length 
@@ -222,6 +225,7 @@
           this.productNumber = 0
         }
       },
+
       search() {
         eventBus.$emit('search', {
           searchText: this.str,
@@ -245,7 +249,6 @@
     .md-app {
       height: 100%;
       border: 1px solid rgba(#000, .12);
-      // height: 74.9vw;
       .md-drawer {
         width: 230px;
         max-width: calc(100vw - 125px);

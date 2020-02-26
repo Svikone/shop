@@ -28,8 +28,6 @@
   import {eventBus} from '@/main.js'
   import api from '../../../../../app.config.js'
 
-
-
   export default  {
     name: 'list-cart',
     props: [
@@ -43,14 +41,15 @@
       return {
         count: '',
         api_url: api.config
-
       }
     },
     methods: {
+
       regExp() {
         this.count = this.count.replace(/[^0-9.]/g,'').replace(/,/,'.').trim();
         this.count = 4
       },
+
       setCount(mode) {
         var cart = [];
         cart=JSON.parse(localStorage.cart)
@@ -64,9 +63,8 @@
         localStorage.setItem('cart', JSON.stringify(cart));
         eventBus.$emit('fullPrice')
         this.count = cart[index].number
-
-        // this.test()
       },
+
       removeListCart() {
         eventBus.$emit('removeItem', this.item._id)
       }

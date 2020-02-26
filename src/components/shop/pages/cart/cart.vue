@@ -49,19 +49,19 @@
     methods: {
       getList() {
         axios.post(this.api_url.url+this.api_url.api+'/catalog/cart/added/products',{productsId: this.productsId}).then(result => {
-          // console.log(result.data)
           this.carts = result.data
           this.fullPrice()
         }).catch(() => {
 
         })
       },
+
        getLocalStorrage() {
-        // const lsCart = localStorage.getItem('cart')
         const lsCart = JSON.parse(localStorage.cart)
         this.productsId = lsCart.map(product => product.id)
           
       },
+
       fullPrice() {
         const counters = JSON.parse(localStorage.cart)
         console.log(counters)
@@ -69,12 +69,12 @@
         for(let price of this.carts) {
           for(let counter of counters) {
             if(price._id == counter.id) {
-              console.log('fulPrice= '+price.price+'*'+counter.number)
               this.fullprice += price.price * counter.number
             }
           }
         }
       },
+
       clear() {
         localStorage.removeItem("cart");
         this.carts = []
@@ -83,6 +83,7 @@
         this.productsId = 0;
 
       },
+
       removeItem(id) {
         let lsCart = JSON.parse(localStorage.cart);
         lsCart = lsCart.filter(e => e.id !== id)

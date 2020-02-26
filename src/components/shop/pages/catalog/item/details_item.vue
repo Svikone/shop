@@ -31,8 +31,6 @@
   import {eventBus} from '../../../../../main.js'
   import api from '../../../../../app.config.js'
 
-
-
   export default  {
     name: 'details-item',
     props: ['item'],
@@ -53,7 +51,6 @@
           if(!lsCart) {
               cart.push(obj)
               localStorage.setItem('cart', JSON.stringify(cart));
-              console.log(cart)
           }
           else {
             cart=JSON.parse(localStorage.cart)

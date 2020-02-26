@@ -7,8 +7,6 @@
         <div class="item">
           <img  src="../../assets/instagram.png">
           <img  src="../../assets/telegram.png">
-
-
         </div>
       </div>
       <div class="phone">

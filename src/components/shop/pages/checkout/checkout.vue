@@ -21,13 +21,15 @@
 
 <script lang="js">
   import btnCheckout from './btnCheckout'
-
+  import { eventBus } from '../../../../main.js'
 
   export default  {
     name: 'checkout',
     props: [],
     mounted () {
-      
+      eventBus.$on('checkout',() => {
+         this.clear() 
+      })
     },
     data () {
       return {
@@ -36,7 +38,10 @@
       }
     },
     methods: {
-      
+      clear() {
+        this.phone = '',
+        this.name = ''
+      }
     },
     computed: {
 
